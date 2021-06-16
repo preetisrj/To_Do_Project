@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+edit blog
+{% endblock %}
+
+{% block body_block %}
+{% load static %}
+
+<div class="center-column">
+
+    <form method="POST" action="/">
+        {{form|crispy}}
+        {% csrf_token %}
+        
+        <button type="submit" class="btn btn-info ">submit</button>
+    </form>
+ 
+    
+        
+    
+            {% for task in tasks %}
+            <div class="card">
+
+                
+                {% if task.complete == True %}
+                <strike>{{task.title}}</strike>
+                
+                {% else %}
+                <center><b>{{task.title}}</b></center>
+                <hr/>
+                {{task.task_detail}}
+                <hr>
+                {{task.created}}
+              
+                
+                <br/>
+               
+                {% endif %}
+                </div>
+                
+                
+                <div class="item-row">
+                
+                    <a class="btn btn-sm btn-info" href="{% url 'To_Do:update_task' task.id %}">Update</a>
+                    <a class="btn btn-sm btn-danger" href="{% url 'To_Do:delete' task.id %}">Delete</a>
+                
+                
+                </div>
+            {% endfor%}
+           
+     
+
+</div>
+{% endblock%}
